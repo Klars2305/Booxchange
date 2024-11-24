@@ -17,10 +17,19 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     protected $table = 'users'; 
+
+    
     protected $fillable = [
-        'name',
-        'email',
+        'student_id',
+        'name', 
+        'institute', 
+        'program', 
+        'sex', 
+        'email', 
         'password',
+                
     ];
 
     /**
@@ -45,4 +54,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function trades()
+{
+    return $this->hasMany(Trade::class, 'owner_id');
+}
 }

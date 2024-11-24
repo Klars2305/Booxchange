@@ -500,6 +500,25 @@ Version: 1.1
     color: inherit;
     text-decoration: none;
   }
+
+  
+  .fixed-size {
+    width: 100%; /* Ensures responsiveness within the column */
+    height: 400px; /* Set desired height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures elements are spaced evenly */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Adds spacing between items */
+    overflow: hidden;
+}
+
+.product-img {
+    width: 100%; /* Scales the image to the container width */
+    height: 250px; /* Set height for uniform image display */
+    object-fit: cover; /* Ensures image fits without distortion */
+}
+
   
   p {
     margin: 0 0 20px 0;

@@ -23,12 +23,12 @@
                     <i class="bi bi-book"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">BookXchange</a>
+                    <a href="{{ url('/seller')}}">BookXchange</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ url('/seller')}}" class="sidebar-link">
                         <i class="bi bi-house"></i>
                         <span>Home</span>
                     </a>
@@ -92,78 +92,49 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:80px;"><strong>#</strong></th>
-                                                <th><strong>DATE</strong></th>
-                                                <th><strong>TYPE</strong></th>
                                                 <th><strong>BOOK TITLE</strong></th>
-                                                <th><strong>AUTHOR</strong></th>
-                                                <th><strong>QUANTITY</strong></th>
-                                                <th><strong>PRICE</strong></th>
+                                                <th><strong>BOOK DESCRIPTION</strong></th>
+                                                <th><strong>BOOK GENRE</strong></th>
+                                                <th><strong>BOOK CONDITION</strong></th>
+                                                <th><strong>BOOK PRICE</strong></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><strong>01</strong></td>
-                                                <td>M-D-Y</td>
-                                                <td>SELL</td>
-                                                <td>HARRY POTTER</td>
-                                                <td>J.K Rowling</td>
-                                                <td>3</td> <!-- Updated for quantity -->
-                                                <td>2100</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button style="background-color: #fff;" type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown" >
-                                                            <svg width="20px" height="20px" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><rect width="24" height="24"/><circle fill="#000" cx="5" cy="12" r="2"/><circle fill="#000" cx="12" cy="12" r="2"/><circle fill="#000" cx="19" cy="12" r="2"/></g></svg>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                        @foreach($BookSales as $sales)
+                                            <t-r>
+                                                <td scope="row">{{ $sales->id }}</td>
+                                                <td>{{ $sales->bookTitle }}</td>
+                                                <td>{{ $sales->bookDescription }}</td>
+                                                <td>{{ $sales->bookGenre }}</td>
+                                                <td>{{ $sales->bookCondition }}</td>
+                                                <td>{{ $sales->price }}</td>
+												<td>
+												<div class="dropdown">
+													<button style="background-color: #fff;" type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
+													<svg width="20px" height="20px" viewBox="0 0 24 24">
+														<g fill="none" fill-rule="evenodd">
+														<rect width="24" height="24"/>
+														<circle fill="#000" cx="5" cy="12" r="2"/>
+														<circle fill="#000" cx="12" cy="12" r="2"/>
+														<circle fill="#000" cx="19" cy="12" r="2"/>
+														</g>
+													</svg>
+													</button>
+													<div class="dropdown-menu">
+													<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal" onclick="openEditModal({{ $sales->id }} , '{{ $sales->bookTitle }}', '{{ $sales->bookDescription }}', '{{ $sales->bookGenre }}', '{{ $sales->bookCondition }}', {{ $sales->price }})">Edit</a>
+													
+													<form action="{{ route('transaction.destroy', $sales->id) }}" method="POST" class="dropdown-item m-0">
+														@csrf
+													@method('DELETE')
+													<button type="submit" class="btn btn text-danger p-0 m-0" onclick="return confirm('Are you sure you want to delete this transaction?')">Delete</button>
+												</form>
 
-                                            <tr>
-                                                <td><strong>02</strong></td>
-                                                <td>M-D-Y</td>
-                                                <td>SELL</td>
-                                                <td>SOLO LEVELING</td>
-                                                <td>JCh'ugong</td>
-                                                <td>3</td> <!-- Updated for quantity -->
-                                                <td>1500</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button style="background-color: #fff;" type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown" >
-                                                            <svg width="20px" height="20px" viewBox="0 0 24 24">"/><circle fill="#000" cx="5" cy="12" r="2"/><circle fill="#000" cx="12" cy="12" r="2"/><circle fill="#000" cx="19" cy="12" r="2"/></g></svg>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
+													</div>
+												</div>
+												</td>
                                             </tr>
-
-                                            <tr>
-                                                <td><strong>03</strong></td>
-                                                <td>M-D-Y</td>
-                                                <td>SELL</td>
-                                                <td>SHERLOCK HOLMES</td>
-                                                <td> Arthur Conan Doyle</td>
-                                                <td>3</td> <!-- Updated for quantity -->
-                                                <td>2000</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button style="background-color: #fff;" type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown" >
-                                                            <svg width="20px" height="20px" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><rect width="24" height="24"/><circle fill="#000" cx="5" cy="12" r="2"/><circle fill="#000" cx="12" cy="12" r="2"/><circle fill="#000" cx="19" cy="12" r="2"/></g></svg>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -304,13 +275,158 @@
 							</div>
 
 						</div>
-					</div><!--grid-->
+					</div>
 
-				</div><!--footer-bottom-content-->
+				</div><
 			</div>
 		</div>
 	</div>
     </div>
+
+    <style>
+    /* Basic Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%;
+      background-color: white;
+      border: 2px solid green;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .modal-header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .modal input, .modal textarea, .modal select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal-footer {
+      text-align: right;
+    }
+    .modal-footer button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .modal-footer .save-btn {
+      background-color: green;
+      color: white;
+    }
+    .modal-footer .cancel-btn {
+      background-color: gray;
+      color: white;
+    }
+    /* Display Modal */
+    .modal.active {
+      display: block;
+    }
+    /* Button Styles */
+    .show-modal-btn {
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .show-modal-btn:hover {
+      background-color: darkgreen;
+    }
+  </style>
+
+
+	@foreach($BookSales as $sales)
+
+	<div id="editModal" class="modal">
+    <div class="modal-header">
+        <h5>Edit Book</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form id="editForm" action="{{ route('transaction.update', '') }}" method="POST">
+        @csrf
+        <input type="hidden" name="id" id="edit-id"> <!-- Hidden ID to identify the transaction -->
+
+        <div>
+            <label for="edit-bookTitle">Book Title:</label>
+            <input type="text" name="bookTitle" id="edit-bookTitle" placeholder="Book Title" required>
+        </div>
+
+        <div>
+            <label for="edit-bookDescription">Book Description:</label>
+            <textarea name="bookDescription" id="edit-bookDescription" placeholder="Description" rows="4" required></textarea>
+        </div>
+
+        <div>
+            <label for="edit-bookGenre">Genre:</label>
+            <select name="bookGenre" id="edit-bookGenre" required>
+                <option value="">Select Genre</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="edit-bookCondition">Book Condition:</label>
+            <select name="bookCondition" id="edit-bookCondition" required>
+                <option value="">Select Condition</option>
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="edit-price">Price:</label>
+            <input type="number" name="price" id="edit-price" placeholder="Price" step="0.01" required>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="save-btn">Save</button>
+        </div>
+    </form>
+</div>
+
+@endforeach
+
+
+
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
+<script>
+  function openEditModal(id, bookTitle, bookDescription, bookGenre, bookCondition, price) {
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-bookTitle').value = bookTitle;
+    document.getElementById('edit-bookDescription').value = bookDescription;
+    document.getElementById('edit-bookGenre').value = bookGenre;
+    document.getElementById('edit-bookCondition').value = bookCondition;
+    document.getElementById('edit-price').value = price;
+
+    // Update the form's action to include the correct route with the transaction ID
+    document.getElementById('editForm').action = "/transaction/update/" + id;
+  }
+</script>
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

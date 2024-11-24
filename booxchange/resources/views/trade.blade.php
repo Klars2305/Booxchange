@@ -5,69 +5,86 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade Page</title>
+    <title>Seller UI</title>
      <link rel="stylesheet" href="lineicons.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{asset('/css/trade.css')}}" >
+    <link rel="stylesheet" href="{{asset('/css/seller.css')}}" >
     
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="user.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+
 </head>
 
-<body>
-    <div class="wrapper"> 
+
+
+<body data-success-message="{{ session('success') }}">
+    <div class="wrapper">
         <aside id="sidebar" style="background-color: #d3efd3;">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="bi bi-book"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">BookXchange</a>
+                    <a href="{{ url('/choice')}}">BookXchange</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ url('/seller')}}" class="sidebar-link">
                         <i class="bi bi-house"></i>
                         <span>Home</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="sale.html" class="sidebar-link">
+                    <a href="{{ url('/userprofile')}}" class="sidebar-link">
                         <i class="bi bi-person"></i>
                         <span>Profile</span>
                     </a>
                 </li>
                 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-arrow-left-right"></i>
-                        <span>Trade</span>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#sellBookModal" class="sidebar-link">
+                        <i class="bi bi-bag"></i>
+                        <span>Sell A Book</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-clipboard"></i>   
-                        <span>Transaction</span>
-                    </a>
-                </li>
+                
+
 
                 <li class="sidebar-item">
+                <a href="{{ route('transaction') }}" class="sidebar-link">
+                <i class="bi bi-clipboard"></i>   
+                 <span>Transaction History</span>
+                </a>
+                </li>   
+                
+                
+                <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
-                        <i class="bi bi-bell"></i>
+                           <i class="bi bi-bell"></i>
                         <span>Notification</span>
                     </a>
                 </li>
               
-            </ul>
-            <div class="sidebar-footer">
-                <a href="#" class="sidebar-link">
+           
+            <div class="sidebar-item">
+                <a href="{{ url('/choice')}}" class="sidebar-link">
                     <i class="bi bi-box-arrow-left"></i>
-                    <span>Logout</span>
+                    <span>Back</span>
                 </a>
             </div>
+            </ul>
         </aside>
         <div class="main">    
             <main class="content px-3 py-4">
@@ -78,503 +95,55 @@
 						<div class="title">
 							<span>Some quality items</span>
 						</div>
-						<h2 class="section-title">Featured Books</h2>
+                        
+
+
+                <div class="search-container" style="display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px;">
+    <form action="{{ route('books.search') }}" method="GET" class="d-flex" style="max-width: 800px; width: 100%; justify-content: center;">
+        @csrf
+        <input type="text" id="search" name="search" class="search-input" placeholder="Search for books..." style="flex: 1; padding: 10px; height: 50px; border-radius: 5px 0 0 5px; border: 1px solid #ccc; height:75px">
+        <button type="submit" class="search-btn" style="background-color: black; height: 50px; width: 50px; border-radius: 5px
+        ; display: flex; justify-content: center; align-items: center; border: 1px solid #ccc; margin-left:20px">
+            <i class="bi bi-search" style="color: white;"></i> 
+        </button>
+    </form>
+    </div>
+
+    
+                          <div>
+						<h2 class="section-title">Books</h2>
 					</div>	
 
 					<div class="product-list" data-aos="fade-up">
 						<div class="row">
 
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										<img src="/images/product-item1.jpg" alt="Books" class="product-item">
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Trade Now</button>
-									</figure>
-									<figcaption>
-										<h3>Simple way of piece life</h3>
-										<span>Armor Ramsey</span>
-										<div class="item-price">For Trading</div>
-									</figcaption>
-								</div>
-							</div>
+                    @if(session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
 
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										<img src="/images/product-item2.jpg" alt="Books" class="product-item">
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Trade Now</button>
-									</figure>
-									<figcaption>
-										<h3>Great travel at desert</h3>
-										<span>Sanchit Howdy</span>
-										<div class="item-price">For Trading</div>
-									</figcaption>
-								</div>
-							</div>
+                    @if($records->isEmpty())
+                        <p>No books found matching your search.</p>
+                    @else
+                        @foreach($records as $data)
+                            <div class="col-md-3">
+                                <div class="product-item">
+                                    <figure class="product-style">
+                                        <img src="{{ asset('storage/images/' . $data->bookImage) }}" alt="Book Image" class="product-item">
+                                        <button type="button" class="add-to-cart">Add to Cart</button>
+                                    </figure>
+                                    <figcaption>
+                                        <h3>{{ $data->bookTitle }}</h3>
+                                        <span>{{ $data->author }}</span>
+                                        <div class="item-price">$ {{ $data->price }}</div>
+                                    </figcaption>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
 
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										<img src="/images/product-item3.jpg" alt="Books" class="product-item">
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Trade Now</button>
-									</figure>
-									<figcaption>
-										<h3>The lady beauty Scarlett</h3>
-										<span>Arthur Doyle</span>
-										<div class="item-price">For Trading</div>
-									</figcaption>
-								</div>
-							</div>
+							
 
-							<div class="col-md-3">
-								<div class="product-item">
-									<figure class="product-style">
-										<img src="/images/product-item4.jpg" alt="Books" class="product-item">
-										<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Trade Now</button>
-									</figure>
-									<figcaption>
-										<h3>Once upon a time</h3>
-										<span>Klien Marry</span>
-										<div class="item-price">For Trading</div>
-									</figcaption>
-								</div>
-							</div>
-						</div><!--ft-books-slider-->
-					</div><!--grid-->
-				</div><!--inner-content-->
-			</div>
-            
-			<div class="row">
-				<div class="col-md-12">
-
-					<div class="btn-wrap align-right">
-						<a href="#" class="btn-accent-arrow">View all products <i
-								class="icon icon-ns-arrow-right"></i></a>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-        <section id="popular-books" class="bookshelf py-5 my-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-    
-                        <div class="section-header align-center">
-                            <div class="title">
-                                <span>Some quality items</span>
-                            </div>
-                            <h2 class="section-title">Popular Books</h2>
-                        </div>
-    
-                        <ul class="tabs">
-                            <li data-tab-target="#all-genre" class="active tab">All Genre</li>
-                            <li data-tab-target="#business" class="tab">Business</li>
-                            <li data-tab-target="#technology" class="tab">Technology</li>
-                            <li data-tab-target="#romantic" class="tab">Romantic</li>
-                            <li data-tab-target="#adventure" class="tab">Adventure</li>
-                            <li data-tab-target="#fictional" class="tab">Fictional</li>
-                        </ul>
-    
-                        <div class="tab-content">
-                            <div id="all-genre" data-tab-content class="active">
-                                <div class="row">
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item1.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Portrait photography</h3>
-                                                <span>Adam Silber</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item2.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Once upon a time</h3>
-                                                <span>Klien Marry</span>
-                                                <div class="item-price">$ 35.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item3.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Tips of simple lifestyle</h3>
-                                                <span>Bratt Smith</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item4.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Just felt from outside</h3>
-                                                <span>Nicole Wilson</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                </div>
-                                <div class="row">
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item5.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Peaceful Enlightment</h3>
-                                                <span>Marmik Lama</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item6.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Great travel at desert</h3>
-                                                <span>Sanchit Howdy</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item7.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Life among the pirates</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item8.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Simple way of piece life</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                </div>
-    
-                            </div>
-                            <div id="business" data-tab-content>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item2.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Peaceful Enlightment</h3>
-                                                <span>Marmik Lama</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item4.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Great travel at desert</h3>
-                                                <span>Sanchit Howdy</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item6.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Life among the pirates</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item8.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Simple way of piece life</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                </div>
-                            </div>
-    
-                            <div id="technology" data-tab-content>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item1.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Peaceful Enlightment</h3>
-                                                <span>Marmik Lama</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item3.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Great travel at desert</h3>
-                                                <span>Sanchit Howdy</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item5.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Life among the pirates</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item7.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Simple way of piece life</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div id="romantic" data-tab-content>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item1.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Peaceful Enlightment</h3>
-                                                <span>Marmik Lama</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item3.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Great travel at desert</h3>
-                                                <span>Sanchit Howdy</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item5.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Life among the pirates</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item7.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Simple way of piece life</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div id="adventure" data-tab-content>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item5.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Life among the pirates</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item7.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Simple way of piece life</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div id="fictional" data-tab-content>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item5.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Life among the pirates</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-    
-                                    <div class="col-md-3">
-                                        <div class="product-item">
-                                            <figure class="product-style">
-                                                <img src="/images/tab-item7.jpg" alt="Books" class="product-item">
-                                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to
-                                                    Cart</button>
-                                            </figure>
-                                            <figcaption>
-                                                <h3>Simple way of piece life</h3>
-                                                <span>Armor Ramsey</span>
-                                                <div class="item-price">$ 40.00</div>
-                                            </figcaption>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                        </div>
-    
-                    </div><!--inner-tabs-->
-    
-                </div>
-            </div>
-        </section>
+       
     </main>
     <section id="quotation" class="align-center pb-5 mb-5">
 		<div class="inner-content">
@@ -723,6 +292,184 @@
 		</div>
 	</div>
     </div>
+
+                
+   
+  
+    <div class="modal fade" id="sellBookModal" tabindex="-1" aria-labelledby="sellBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sellBookModalLabel" >Seller Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal Form -->
+                
+                <form  action="{{ route('sell-book.store') }}" method="POST" enctype="multipart/form-data">
+                              @csrf
+                              
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="sellerName" class="form-label">Seller Name</label>
+                            <input type="text" name="sellerName" id="sellerName" class="form-control" placeholder="Seller Name" readonly required value=" {{ Auth::user()->name }}">
+                        </div>
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="bookTitle" class="form-label">Book Title</label>
+                            <input type="text" name="bookTitle" id="bookTitle" class="form-control" placeholder="Book Title" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="bookImage" class="form-label">Book Image </label>
+                            <input type="file"  name="bookImage" id="bookImage" accept="image/*" class="form-control" placeholder="Book Image URL" required>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="author" class="form-label">Author</label>
+                            <input type="text" name="author"id="author" class="form-control" placeholder="Author Name" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="bookDescription" class="form-label">Description</label>
+                        <textarea id="bookDescription" name="bookDescription" class="form-control" placeholder="Book Description" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="bookGenre" class="form-label">Genre</label>
+                            <select id="bookGenre" class="form-select" name="bookGenre" required>
+                                <option value="">Select Genre</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Comedy">Comedy</option>
+                                <option value="Action">Action</option>
+                                <option value="Horror">Horror</option>
+                                <option value="Fantasy">Fantasy</option>
+                                <option value="Sci-Fi">Sci-Fi</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="bookCondition" class="form-label">Condition</label>
+                            <select id="bookCondition" class="form-select" name="bookCondition" required>
+                                <option value="">Select Condition</option>
+                                <option value="new">New</option>
+                                <option value="good">Good</option>
+                                <option value="used">Used</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="text" id="price" class="form-control" placeholder="Price" name="price" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="price" class="form-label">Preferred Item when Trading</label>
+                            <input type="text" id="preferItemsToTrade" class="form-control" placeholder="Trade Item" name="preferItemsToTrade" required>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" style="border-radius: 70px; padding: 20px; background-color:#D3EFD3; color:black;" >Submit</button>
+                    </div>
+                </form>
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>The trader name cannot be the same as the seller name. Please select a different trader.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+<script>
+ 
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the success message from the data attribute
+        var successMessage = document.body.getAttribute('data-success-message');
+        
+        // Check if there's a success message
+        if (successMessage) {
+            // Close the modal
+            $('#sellBookModal').modal('hide');
+            
+            // Optionally, display the success message (if you want)
+            alert(successMessage);
+        }
+    });
+
+
+    document.querySelector('.search-btn').addEventListener('click', filterBooks);
+document.getElementById('search').addEventListener('keyup', filterBooks);
+
+// Function to filter books based on the search query
+function filterBooks() {
+    const searchQuery = document.getElementById('search').value.trim().toLowerCase(); // Trim and convert to lowercase
+    const productItems = document.querySelectorAll('.product-item');
+
+    // Only proceed if the search query is not empty
+    if (searchQuery === '') {
+        // Show all items if the search input is empty
+        productItems.forEach((item) => {
+            item.closest('.col-md-3').style.display = 'block';
+        });
+        return;
+    }
+
+    // Loop through each book item
+    productItems.forEach((item) => {
+        const title = item.querySelector('h3').textContent.toLowerCase();
+        const author = item.querySelector('span').textContent.toLowerCase();
+        const genre = item.querySelector('.book-genre') ? item.querySelector('.book-genre').textContent.toLowerCase() : '';
+
+        // Check for exact match (no partial matches allowed)
+        if (title === searchQuery || author === searchQuery || genre === searchQuery) {
+            item.closest('.col-md-3').style.display = 'block'; // Show matching item
+        } else {
+            item.closest('.col-md-3').style.display = 'none'; // Hide non-matching item
+        }
+    });
+}
+
+// Function to restrict special characters in the search input
+document.getElementById('search').addEventListener('input', function(event) {
+    // Allow only alphanumeric characters and spaces
+    event.target.value = event.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
+});
+
+</script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
